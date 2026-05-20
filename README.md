@@ -1,6 +1,6 @@
 # DeformMaster: An Interactive Physics-Neural World Model for Deformable Objects from Videos
 
-[Project page](https://can-lee.github.io/deformmaster-web/) · [arXiv](https://arxiv.org/abs/2605.09586) · Hugging Face (coming soon)
+[Project page](https://can-lee.github.io/deformmaster-web/) · [arXiv](https://arxiv.org/abs/2605.09586) · Hugging Face (coming)
 
 <img src="assets/teaser.png" alt="teaser" width="100%">
 
@@ -49,9 +49,12 @@ python playground.py \
 
 ```bibtex
 @article{li2026deformmaster,
-    title  = {DeformMaster: An Interactive Physics-Neural World Model for Deformable Objects from Videos},
-    author = {Li, Can and Li, Zhoujian and Li, Ren and Gu, Jie and Lei, Lei and Chen, Jingmin and Sun, Lei},
-    year   = {2026},
+    title         = {DeformMaster: An Interactive Physics-Neural World Model for Deformable Objects from Videos},
+    author        = {Li, Can and Li, Zhoujian and Li, Ren and Gu, Jie and Lei, Lei and Chen, Jingmin and Sun, Lei},
+    journal       = {arXiv preprint arXiv:2605.09586},
+    year          = {2026},
+    eprint        = {2605.09586},
+    archivePrefix = {arXiv}
 }
 ```
 
