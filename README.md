@@ -7,7 +7,7 @@
 ## Release plan
 
 - [x] inference code
-- [x] playground code
+- [x] online interaction code
 - [ ] checkpoints
 - [ ] training code
 - [ ] custom data and preprocessing code
@@ -31,9 +31,9 @@ bash install.sh
 python inference.py --case_name my_mono_cloth --config configs/planar.yaml
 ```
 
-## Interactive playground
+## Online interaction
 
-<img src="assets/playground.png" alt="online playground" width="100%">
+<img src="assets/playground.png" alt="online interaction" width="100%">
 
 ```bash
 python playground.py \
