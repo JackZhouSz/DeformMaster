@@ -60,4 +60,4 @@ python playground.py \
 
 ## Acknowledgements
 
-We thank the authors of [PhysTwin](https://jianghanxiao.github.io/phystwin-web/), [PGND](https://arxiv.org/abs/2506.15680), and [3D Gaussian Splatting](https://github.com/graphdeco-inria/gaussian-splatting) for their works and code release.
+We thank the authors of [PhysTwin](https://jianghanxiao.github.io/phystwin-web/), [PGND](https://kywind.github.io/pgnd), and [3D Gaussian Splatting](https://github.com/graphdeco-inria/gaussian-splatting) for their works and code release.
