@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 from torch import Tensor
 
-# [NEW] Import local PGND components
+# Import local PGND components
 from .pgnd_components.encoder import PointNetEncoder
 from .pgnd_components.decoder import CondNeRFModel
 from .pgnd_components.utils import get_bspline_weights, positional_encoding

@@ -32,7 +32,7 @@ class NeoHookeanElasticity(nn.Module):
         self.svd_clamp_max = svd_clamp_max
 
     def _safe_F(self, F):
-        # [STABILITY] SVD clamping to prevent numerical explosions
+        # SVD clamping to prevent numerical explosions
         U, S, Vh = torch.linalg.svd(F + torch.eye(3, device=F.device, dtype=F.dtype) * 1e-5)
         S_clamped = torch.clamp(S, min=0.05, max=self.svd_clamp_max)
         return torch.matmul(U, torch.matmul(torch.diag_embed(S_clamped), Vh))
@@ -41,16 +41,16 @@ class NeoHookeanElasticity(nn.Module):
         # F: [B, N, 3, 3] or [N, 3, 3]
         I = torch.eye(3, device=F.device, dtype=F.dtype)
         
-        # [STABILITY] Use SVD clamping instead of element-wise clamping
+        # Use SVD clamping instead of element-wise clamping
         F_clamped = self._safe_F(F)
         
-        # [STABILITY] Add a diag perturbation
+        # Add a diag perturbation
         F_stab = F_clamped + I * 1e-5
         
-        # [STABILITY] Use pseudo-inverse
+        # Use pseudo-inverse
         FinvT = torch.linalg.pinv(F_stab).transpose(-2, -1)
         
-        # [STABILITY] Robust determinant - relaxed for cloth compression
+        # Robust determinant - relaxed for cloth compression
         detF = torch.det(F_stab)
         J = torch.clamp(detF, min=0.01, max=10.0).unsqueeze(-1).unsqueeze(-1) # [..., 1, 1]
         
@@ -62,7 +62,7 @@ class NeoHookeanElasticity(nn.Module):
         
         P = term1 + term2
         
-        # [STABILITY] Final Stress Clipping - tightened to 1e5 for cloth
+        # Final Stress Clipping - tightened to 1e5 for cloth
         P = torch.clamp(P, min=-1e5, max=1e5)
         return P
 
@@ -76,7 +76,7 @@ class FiberElasticity(nn.Module):
         self.svd_clamp_max = svd_clamp_max
 
     def _safe_F(self, F):
-        # [STABILITY] SVD clamping
+        # SVD clamping
         U, S, Vh = torch.linalg.svd(F + torch.eye(3, device=F.device, dtype=F.dtype) * 1e-5)
         S_clamped = torch.clamp(S, min=0.05, max=self.svd_clamp_max)
         return torch.matmul(U, torch.matmul(torch.diag_embed(S_clamped), Vh))
@@ -86,11 +86,11 @@ class FiberElasticity(nn.Module):
         # k: [N] stiffness
         # d: [N, 3] fiber direction (normalized)
         
-        # [STABILITY] Use SVD clamping
+        # Use SVD clamping
         F_clamped = self._safe_F(F)
         
         # Fd = F * d
-        # [STABILITY] Ensure d is not NaN and is normalized
+        # Ensure d is not NaN and is normalized
         d_norm = torch.nn.functional.normalize(d, dim=-1, eps=1e-8)
         d_vec = d_norm.unsqueeze(-1) # [N, 3, 1]
         Fd = torch.matmul(F_clamped, d_vec) # [N, 3, 1]
@@ -104,11 +104,11 @@ class FiberElasticity(nn.Module):
         # d \otimes d -> [N, 3, 3]
         ddT = torch.matmul(d_vec, d_vec.transpose(-2, -1))
         
-        # [STABILITY] Avoid division by zero
+        # Avoid division by zero
         scalar = k.view(-1, 1, 1) * (l - 1.0) / (l + 1e-6) * mask
         
         P = scalar * torch.matmul(F_clamped, ddT)
-        return torch.clamp(P, min=-2e5, max=2e5) # [STABILITY] Clamp fiber stress
+        return torch.clamp(P, min=-2e5, max=2e5) # Clamp fiber stress
 
 class MixtureElasticity(nn.Module):
     """
@@ -162,15 +162,15 @@ class MixtureElasticity(nn.Module):
                 P_expert = self.expert_map[expert_key](F, mu, lam, fk, fd)
                 P_total = P_total + w * P_expert
                 
-        return torch.clamp(P_total, min=-2e5, max=2e5) # [STABILITY] Final mixture stress clipping
+        return torch.clamp(P_total, min=-2e5, max=2e5) # Final mixture stress clipping
 
     def _manual_corotated(self, F, mu, lam):
         # Re-implementation to accept mu, lam directly
-        # [STABILITY] Add epsilon before SVD to prevent NaN gradients on identical singular values
+        # Add epsilon before SVD to prevent NaN gradients on identical singular values
         I = torch.eye(3, device=F.device).to(F.dtype)
         F_safe = F + I * 1e-6
         
-        # [STABILITY] Use SVD with a gradient-safe implementation if possible, 
+        # Use SVD with a gradient-safe implementation if possible,
         # or at least ensure we don't crash on singular matrices.
         try:
             U, sigma, Vh = torch.linalg.svd(F_safe)
@@ -180,7 +180,7 @@ class MixtureElasticity(nn.Module):
             
         R = torch.matmul(U, Vh)
         
-        # [STABILITY] Robust determinant and inverse
+        # Robust determinant and inverse
         J = torch.clamp(torch.det(F_safe), min=0.01, max=10.0).view(-1, 1, 1)
         FinvT = torch.linalg.pinv(F_safe).transpose(-2, -1)
         
@@ -192,7 +192,7 @@ class MixtureElasticity(nn.Module):
 
     def _manual_stvk(self, F, mu, lam):
         I = torch.eye(3, device=F.device, dtype=F.dtype)
-        # [STABILITY] Clamp F to prevent extreme values in F^T * F
+        # Clamp F to prevent extreme values in F^T * F
         F_clamped = torch.clamp(F, min=-5.0, max=5.0) # Tightened from 10.0
         E = 0.5 * (torch.matmul(F_clamped.transpose(-2, -1), F_clamped) - I)
         trE = torch.diagonal(E, dim1=-2, dim2=-1).sum(-1).view(-1, 1, 1)

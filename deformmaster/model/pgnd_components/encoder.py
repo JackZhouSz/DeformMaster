@@ -14,7 +14,7 @@ class STN3d(nn.Module):
         self.fc3 = nn.Linear(256, 9)
         self.relu = nn.ReLU()
 
-        # [STABILITY] Use GroupNorm instead of BatchNorm to support batch_size=1
+        # Use GroupNorm instead of BatchNorm to support batch_size=1
         self.gn1 = nn.GroupNorm(8, 64)
         self.gn2 = nn.GroupNorm(8, 128)
         self.gn3 = nn.GroupNorm(32, 1024)
@@ -57,7 +57,7 @@ class PointNetEncoder(nn.Module):
         self.conv2 = nn.Conv1d(64, 128, 1)
         self.conv3 = nn.Conv1d(128, feature_dim, 1)
         
-        # [STABILITY] Use GroupNorm
+        # Use GroupNorm
         self.gn1 = nn.GroupNorm(8, 64)
         self.gn2 = nn.GroupNorm(8, 128)
         self.gn3 = nn.GroupNorm(8, feature_dim)
