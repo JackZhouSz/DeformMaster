@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+.env
+
+# Outputs / weights / data (downloaded from Hugging Face)
+outputs/
+checkpoints/
+data/
+datasets/
+
+# OS / editors
+.DS_Store
+.vscode/
+.idea/
+
+# Logs
+*.log
+wandb/
+runs/
