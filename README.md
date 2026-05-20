@@ -49,12 +49,13 @@ python playground.py \
 
 ```bibtex
 @article{li2026deformmaster,
-    title         = {DeformMaster: An Interactive Physics-Neural World Model for Deformable Objects from Videos},
-    author        = {Li, Can and Li, Zhoujian and Li, Ren and Gu, Jie and Lei, Lei and Chen, Jingmin and Sun, Lei},
-    journal       = {arXiv preprint arXiv:2605.09586},
-    year          = {2026},
-    eprint        = {2605.09586},
-    archivePrefix = {arXiv}
+      title={DeformMaster: An Interactive Physics-Neural World Model for Deformable Objects from Videos},
+      author={Can Li and Zhoujian Li and Ren Li and Jie Gu and Lei Lei and Jingmin Chen and Lei Sun},
+      year={2026},
+      eprint={2605.09586},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2605.09586},
 }
 ```
 
