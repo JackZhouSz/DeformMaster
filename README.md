@@ -8,7 +8,7 @@
 
 - [x] inference code
 - [x] playground code
-- [ ] weights
+- [ ] checkpoints
 - [ ] training code
 - [ ] custom data and preprocessing code
 - [ ] full configurations
