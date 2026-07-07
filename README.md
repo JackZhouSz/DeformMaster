@@ -65,20 +65,20 @@ gaussian_output/
 MANIFEST.txt
 ```
 
-Run the softbody demo:
-
-```bash
-CUDA_VISIBLE_DEVICES=<gpu_id> python interactive_playground_online.py \
-    --case_name double_lift_sloth \
-    --output outputs/output_ours
-```
-
 Run the monocular-cloth demo:
 
 ```bash
 CUDA_VISIBLE_DEVICES=<gpu_id> python interactive_playground_online.py \
     --case_name my_mono_cloth \
     --output outputs/output_mono
+```
+
+Run the softbody demo:
+
+```bash
+CUDA_VISIBLE_DEVICES=<gpu_id> python interactive_playground_online.py \
+    --case_name double_lift_sloth \
+    --output outputs/output_ours
 ```
 
 If the port is busy, the script picks the next free port and prints the URL.
