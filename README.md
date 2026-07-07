@@ -50,7 +50,7 @@ The current interactive demo is `interactive_playground_online.py`.
 
 ![Interactive playground](assets/playground.jpg)
 
-Download `playground_assets.zip` (ckpt and data) from the [playground assets](https://huggingface.co/datasets/Canlee/DeformMaster-Assets) page into the repository root and unzip it:
+Download `playground_assets.zip` (ckpt and data) from the [DeformMaster-Assets](https://huggingface.co/datasets/Canlee/DeformMaster-Assets) page into the repository root and unzip it:
 
 ```bash
 unzip playground_assets.zip
@@ -86,12 +86,10 @@ If the port is busy, the script picks the next free port and prints the URL.
 Useful options:
 
 ```bash
---n_ctrl_parts 1          # one controller
---n_ctrl_parts 2          # two controllers
 --bg_blank                # white background
 --bg_mono                 # use ./data/bg_mono.jpg (default for my_mono_cloth)
 --settle_iters N          # initial gravity-only simulation steps; default 220
---output_dir playground_recording/physics_flow
+--output_dir playground_recording/physics_flow  # save data collected from the playground
 ```
 
 Browser controls:
