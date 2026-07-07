@@ -8,12 +8,12 @@
 
 ## Release Status
 
-- [x] Inference code (2026/05/20)
-- [x] Online interaction code (2026/05/20)
-- [x] Checkpoints (2026/07/07)
-- [x] Most training code (remaining auxiliary pieces will be released later) (2026/07/07)
-- [x] Custom data and preprocessing code (2026/07/07)
-- [x] Full configurations (2026/07/07)
+- [x] **[2026/05/20]** Inference code
+- [x] **[2026/05/20]** Online interaction code
+- [x] **[2026/07/07]** Checkpoints
+- [x] **[2026/07/07]** Most training code (remaining auxiliary pieces will be released later)
+- [x] **[2026/07/07]** Custom data and preprocessing code
+- [x] **[2026/07/07]** Full configurations
 - [ ] Downstream embodied application
 
 ## 1. Environment
