@@ -145,8 +145,6 @@ gt_track_3d.pkl
 Convert one RGB video to the expected data layout:
 
 ```bash
-export DEFORMMASTER_VGGT_ROOT=/path/to/vggt-omega
-export DEFORMMASTER_VGGT_CHECKPOINT=/path/to/vggt_omega_1b_512.pt
 python data_process/mono_extract_pkg/scripts/extract_mono_video.py \
     --video data/mono_videos/cloth.mp4 \
     --output_dir data/different_types/my_mono_cloth
@@ -170,7 +168,8 @@ python data_process/script_process_data.py \
     --no-segment
 ```
 
-For details and troubleshooting, read `data_process/README.md`.
+See [data_process/README.md](data_process/README.md) for required foundation
+models, dependencies, and troubleshooting.
 
 ## 4. Training Code
 
