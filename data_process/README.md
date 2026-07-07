@@ -1,7 +1,7 @@
 # Data Processing
 
-This directory contains the tools for turning raw RGB-D or monocular
-observations into DeformMaster training cases. The main training input is:
+This directory contains the tools for turning raw RGB-D or monocular RGB
+videos into DeformMaster training cases. The main training input is:
 
 ```text
 data/different_types/<case_name>/final_data.pkl
