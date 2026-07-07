@@ -266,3 +266,21 @@ Run the full Stage 2 eval pipeline without retraining:
 ```bash
 bash scripts_training_eval/eval/run_dynamics_eval_pipeline.sh outputs/output_ours 0
 ```
+
+## Citation
+
+```bibtex
+@article{li2026deformmaster,
+      title={DeformMaster: An Interactive Physics-Neural World Model for Deformable Objects from Videos},
+      author={Can Li and Zhoujian Li and Ren Li and Jie Gu and Lei Lei and Jingmin Chen and Lei Sun},
+      year={2026},
+      eprint={2605.09586},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2605.09586},
+}
+```
+
+## Acknowledgements
+
+We thank the authors of [PhysTwin](https://jianghanxiao.github.io/phystwin-web/), [PGND](https://kywind.github.io/pgnd), and [3D Gaussian Splatting](https://github.com/graphdeco-inria/gaussian-splatting).
