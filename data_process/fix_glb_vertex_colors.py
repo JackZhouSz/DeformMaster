@@ -1,10 +1,10 @@
 """Convert GLB texture to per-vertex colors so open3d can read them.
 
 open3d's GLB loader sometimes drops the UV texture link, leaving the mesh
-with neither triangle_uvs nor vertex_colors. gs_train then raises
-"Mesh has no texture or valid vertex colors." Trimesh reads GLB textures
-reliably, so we sample the texture at each vertex and bake the result
-back into the GLB as vertex_colors.
+with neither triangle_uvs nor vertex_colors. Downstream appearance tools may
+then fail with "Mesh has no texture or valid vertex colors." Trimesh reads
+GLB textures reliably, so we sample the texture at each vertex and bake the
+result back into the GLB as vertex_colors.
 
 Usage:
     python data_process/fix_glb_vertex_colors.py data/mesh/best_teddy.glb [...]

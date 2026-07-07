@@ -229,22 +229,15 @@ from:
 gaussian_output/<case_name>/<experiment_name>/
 ```
 
-## Pre-Training Checks
+## Before Training
 
-Before dynamics training:
+The public release focuses on the online playground and preprocessing flow.
+Full training code will be released after publication. Before using a processed
+case for training in the full codebase:
 
 - Add the case to the appropriate config under `configs/`.
 - Confirm `final_data.pkl`, `split.json`, and `gt_track_3d.pkl` exist.
 - Inspect point clouds and controller locations.
-- Run a single-case smoke training command before launching a large batch.
-
-Example:
-
-```bash
-python scripts_training_eval/dynamics/script_train_mpm.py \
-    --case_name <case_name> \
-    --config configs/cloth.yaml
-```
 
 ## Common Issues
 

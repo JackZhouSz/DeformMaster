@@ -10,10 +10,10 @@
 
 - [x] **[2026/05/20]** Inference code
 - [x] **[2026/05/20]** Online interaction code
-- [x] **[2026/07/07]** Checkpoints
-- [x] **[2026/07/07]** Most training code (remaining auxiliary pieces will be released later)
-- [x] **[2026/07/07]** Custom data and preprocessing code
-- [x] **[2026/07/07]** Full configurations
+- [x] **[2026/07/07]** Demo data and checkpoints
+- [x] **[2026/07/07]** Interactive playground demo
+- [x] **[2026/07/07]** Data preprocessing code
+- [ ] Full training code
 - [ ] Downstream embodied application
 
 ## 1. Environment
@@ -41,7 +41,7 @@ pip install gradio==6.2.0 fastapi uvicorn
 python -c "import torch, warp, gradio; print('env OK', torch.__version__)"
 ```
 
-For full data processing and training, run `bash ./env_install/env_install.sh`
+For full data processing dependencies, run `bash ./env_install/env_install.sh`
 without `SKIP_OPT=1`.
 
 ## 2. Run The Online Demo
@@ -113,7 +113,7 @@ playground_recording/physics_flow/<case>/
   metadata.json
 ```
 
-## 3. Prepare Training Data
+## 3. Prepare Data
 
 ### PhysTwin Data
 
@@ -124,7 +124,7 @@ repository root:
 - [data](https://huggingface.co/datasets/Jianghanxiao/PhysTwin/resolve/main/data.zip): original and processed data for different cases. Case names can be found under `data/different_types`.
 - [gaussian_output](https://huggingface.co/datasets/Jianghanxiao/PhysTwin/resolve/main/gaussian_output.zip): static Gaussian Splatting appearance results.
 
-After extracting `data.zip`, training cases live under:
+After extracting `data.zip`, processed cases live under:
 
 ```text
 data/different_types/<case_name>/
@@ -172,98 +172,11 @@ python data_process/script_process_data.py \
 
 For details and troubleshooting, read `data_process/README.md`.
 
-## 4. Training
+## 4. Training Code
 
-Most training code used by DeformMaster is included in this release. Remaining
-auxiliary pieces will be released in later updates.
-
-### Select Actuator Gains
-
-Actuator/controller-related parameters were tuned with CMA-ES and are already
-written into the released YAML configs.
-
-### Train Dynamics
-
-Train physics-neural dynamics and run the default evaluation pipeline:
-
-```bash
-bash run_dynamics_training_eval.sh
-```
-
-Optional: pass an output tag and pipeline GPU, for example
-`bash run_dynamics_training_eval.sh outputs/output_ours 0`. Category configs
-can be overridden with `ROPE_CONFIG`, `CLOTH_CONFIG`, `SOFTBODY_CONFIG`, and
-`PACKAGE_CONFIG`.
-
-Dynamics checkpoints are written under each config's `output_dir`, for example:
-
-```text
-outputs/output_ours/cloth_warp/<scene>/best_checkpoint.pt
-outputs/output_ours/cloth_warp/<scene>/final_checkpoint.pt
-outputs/output_ours/cloth_warp/<scene>/config.yaml
-```
-
-### Train Appearance
-
-Train static Gaussian Splatting appearance models from `data/gaussian_data`:
-
-```bash
-GPUS=0,1,2 bash scripts_training_eval/appearance/gs_run.sh
-```
-
-The script writes static appearance models under:
-
-```text
-gaussian_output/<scene>/
-gaussian_output_video/<scene>/
-```
-
-### RGB-Guided Refinement
-
-RGB-guided refinement runs from dynamics checkpoints using each config's
-`stage3:` block:
-
-```bash
-bash run_rgb_guided_refinement.sh
-```
-
-Optional: pass `train` or `eval` to run only one phase, and set
-`STAGE3_GPUS=0,1,2` to override the inference/render GPU pool.
-
-RGB-guided refinement writes outputs under:
-
-```text
-outputs/output_ours_finetune/<category>_warp_finetune/<scene>/
-outputs/output_ours_finetune/mpm_inference/<scene>/
-outputs/output_ours_finetune/gaussian_output_dynamic_mpm/<scene>/
-results/output_ours_finetune_*
-```
-
-## 5. Run Inference / Rendering / Evaluation Manually
-
-Run inference for an existing training output:
-
-```bash
-python scripts_training_eval/dynamics/script_inference_mpm.py --input outputs/output_ours --gpu 0
-```
-
-Render dynamic Gaussian Splatting from `inference.pkl`:
-
-```bash
-bash scripts_training_eval/appearance/gs_run_simulation.sh outputs/output_ours/mpm_inference "" "" 0
-```
-
-Evaluate predictions:
-
-```bash
-bash scripts_training_eval/eval/evaluate.sh outputs/output_ours
-```
-
-Run the full Stage 2 eval pipeline without retraining:
-
-```bash
-bash scripts_training_eval/eval/run_dynamics_eval_pipeline.sh outputs/output_ours 0
-```
+This release focuses on the interactive online demo, checkpoint loading,
+inference/runtime modules, configurations, and demo data. Full training code
+will be released after publication.
 
 ## Citation
 

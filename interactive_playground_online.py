@@ -38,7 +38,7 @@ from gaussian_splatting.dynamic_utils import (
     knn_weights_sparse,
 )
 from scripts_training_eval.appearance.gs_render import remove_gaussians_with_low_opacity
-from deformmaster.engine.trainer_mpm import PhysExpertMPMTrainer
+from deformmaster.engine.playground_engine import PlaygroundEngine
 from deformmaster.model.diff_simulator.warp_solver.warp_utils import (
     torch2warp_float,
     torch2warp_vec3,
@@ -1906,7 +1906,7 @@ def main():
     if not os.path.exists(gs_path):
         raise FileNotFoundError(f"Gaussian model not found: {gs_path}")
 
-    trainer = PhysExpertMPMTrainer(cfg, args.case_name, for_inference=True)
+    trainer = PlaygroundEngine(cfg, args.case_name)
     trainer.load_from_checkpoint(ckpt_path)
 
     playground = GradioInteractiveMPMPlayground(

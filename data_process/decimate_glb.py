@@ -1,10 +1,9 @@
 """Decimate a GLB to a target triangle count and bake per-vertex colors.
 
 The curated TRELLIS-style meshes can have 100k+ triangles, which makes
-gs_train initialise millions of Gaussians and run very slowly. This
-script simplifies each mesh via open3d's quadric decimation and writes
-the result back as a GLB with explicit vertex colors so open3d can
-read them at training time.
+static GS initialization very slow. This script simplifies each mesh via
+open3d's quadric decimation and writes the result back as a GLB with
+explicit vertex colors so open3d can read them later.
 
 Usage:
     python data_process/decimate_glb.py --target-tris 20000 \\
