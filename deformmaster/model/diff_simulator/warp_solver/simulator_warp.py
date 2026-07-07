@@ -23,7 +23,7 @@ class WarpMPMSimulator(nn.Module):
         # Initialize Warp
         wp.init()
         wp.config.verify_cuda = True
-        wp.config.quiet = True # Suppress Warp JIT loading messages to keep terminal clean
+        wp.config.quiet = True # [FIX] Suppress Warp JIT loading messages to keep terminal clean
         
         self.n_particles = int(cfg.n_particles)
         self.grid_res = int(cfg.grid_res)
@@ -80,7 +80,7 @@ class WarpMPMSimulator(nn.Module):
         self.F = torch.eye(3, device=self.device).repeat(self.n_particles, 1, 1).contiguous().detach().requires_grad_(True)
         self.C = torch.zeros((self.n_particles, 3, 3), device=self.device).contiguous().detach().requires_grad_(True)
         
-        # Keep initial tensors as leaves
+        # [FIX] Keep initial tensors as leaves
         self.x.retain_grad()
         self.v.retain_grad()
         self.F.retain_grad()
@@ -104,7 +104,7 @@ class WarpMPMSimulator(nn.Module):
         self.solver.set_parameters_dict(material_params, device=self.warp_device)
         self.solver.finalize_mu_lam(device=self.warp_device)
         
-        # Apply Boundary Conditions during reset
+        # [NEW] Apply Boundary Conditions during reset
         self._apply_boundary()
 
         # Handle Controller Connections
@@ -225,7 +225,7 @@ class WarpMPMSimulator(nn.Module):
         surface_type = getattr(self.cfg.boundary, 'surface', 'slip')
         friction_val = getattr(self.cfg.boundary, 'friction', 0.5) if surface_type != 'sticky' else 0.0
         
-        # Shift boundary point to match normalized grid space
+        # [FIX] Shift boundary point to match normalized grid space
         # World space [0,0,0] -> Grid space [0.5, 0.5, 0.5]
         base_point = getattr(self.cfg.boundary, 'point', [0.0, 0.0, 0.0])
         shifted_point = [base_point[0] + 0.5, base_point[1] + 0.5, base_point[2] + 0.5]

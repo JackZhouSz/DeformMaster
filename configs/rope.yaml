@@ -1,0 +1,140 @@
+output_dir: './outputs/output_ours/rope_warp'
+tag: 'rope'
+
+target_scenes:
+  - "single_push_rope"
+  - "single_push_rope_1"
+  - "single_lift_rope"
+
+per_scene: {}
+
+data:
+  root: './data/different_types'
+  reverse_z: true
+  gaussian_output_dir: './gaussian_output'
+  gaussian_grid_n: 96
+  gaussian_density_thres: 0.8    
+  gaussian_search_thres: 0.3
+  gaussian_max_particles_per_cell: 3
+
+
+train:
+  lr_params: 1e-3
+  iters: 300
+  batch_size: 1
+  gpus: '4,5,6,7'
+  num_workers: 1
+  lambda_track: 1.0
+  lambda_chamfer: 1.0
+  lambda_length: 1
+  length_k: 6
+  early_stop_patience: 30
+  early_stop_min_delta: 1e-5
+
+mpm:
+  use_warp: true
+  device: 'cuda'
+  n_particles: 100000
+  dt: 8e-4
+  grid_res: 32       
+  
+  active_experts: ['nh', 'co', 'st']
+
+  init_weights: [0.5, 0.35, 0.15]
+
+  tape_window: 20
+  per_param_clip: 1.0
+  grad_clip_norm: 10.0
+  svd_clamp_max: 2.0
+  
+  floor_margin: 0.0
+  gravity: [0.0, 0.0, -9.8] 
+  damping: 30.0
+  grid_v_damping_scale: 0.999 
+  clip_bound: 0.5
+  
+  init_raw_params: -1.0
+  init_raw_E: 0.0
+  init_raw_nu: 0.0
+  init_raw_yield: 0.0
+  init_raw_ctrl_stiffness: -0.197
+  init_raw_ctrl_damping: -1.674
+  
+  material_bounds:
+    E: [1e4, 1e6]
+    nu: [0.0, 0.35]
+    yield_stress: [1e4, 1e7]
+    plastic_viscosity: [0.1, 10.0] 
+    controller_stiffness: [1e4, 5e6]
+    controller_damping: [1e2, 5e4]
+  
+  lr_ranges:
+    E: [1e-2, 1e-4]
+    nu: [1e-2, 1e-4]
+    yield_stress: [1e-2, 1e-4]     
+    plastic_viscosity: [1e-2, 1e-4] 
+    log_weights: [1e-2, 1e-4]
+    controller_stiffness: [1e-2, 1e-4]
+    controller_damping: [1e-2, 1e-4]
+  
+  weight_warmup_iters: 10
+  max_frames: 300 
+  steps_per_frame: 42
+  
+  controller_radius: 0.08
+  controller_max_neighbors: 128
+  controller_clamp_dv: 10.0
+  controller_smooth_window: 2
+  controller_warmup_frames: 3
+  controller_keep_n: -1
+  
+  boundary:
+    type: 'surface_collider'
+    point: [0.0, 0.0, 0.0]
+    normal: [0.0, 0.0, 1.0]
+    surface: 'slip'
+    friction: 0.4       
+    restitution: 0.5       
+    start_time: 0.0
+    end_time: 1000.0
+
+residual:
+  enabled: true
+  warmup_iters: 5
+  lr: 5e-3
+  grad_clip_norm: 5.0
+  feature_dim: 64
+  radius: 0.05
+  n_history: 3
+  grid_res_list: [32, 32, 32]
+  pe_num_func: 6
+  num_layers: 4
+  hidden_size: 128
+  input_scale: 1.0
+  output_scale: 1.0
+  lambda_reg: 0.001
+  topology_k: 8
+  topology_radius: 0.08
+  lambda_topology_edge: 0.05
+  lambda_topology_smooth: 0.02
+
+stage3:
+  output_dir: './outputs/output_ours_finetune/rope_warp_finetune'
+  tag: 'rope_rgb'
+  train:
+    iters: 50
+    gpus: '4,5,6,7'
+    num_workers: 1
+  residual:
+    warmup_iters: 0
+  rgb_finetune:
+    enabled: true
+    gaussian_output_root: "gaussian_output"
+    sh_degree: 3
+    lambda_rgb: 0.015
+    gs_lr: 1.0e-3
+    freeze_gs: true
+    lbs_k: 16
+    cams: [0, 1, 2]
+    bg: black
+    max_frames: -1

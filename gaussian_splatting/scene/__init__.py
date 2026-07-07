@@ -49,8 +49,8 @@ class Scene:
             print("Found transforms_train.json file, assuming Blender data set!")
             scene_info = sceneLoadTypeCallbacks["Blender"](args.source_path, args.white_background, args.depths, args.eval)
         elif os.path.exists(os.path.join(args.source_path, 'camera_meta.pkl')):
-            print("Found metadata.json file, assuming customized QQTT dataset!")
-            scene_info = sceneLoadTypeCallbacks["QQTT"](args.source_path, args.images, args.depths, args.eval, args.train_test_exp, args.use_masks, args.gs_init_opt, args.pts_per_triangles, args.use_high_res)
+            print("Found camera_meta.pkl file, assuming DeformMaster custom dataset!")
+            scene_info = sceneLoadTypeCallbacks["DeformMaster"](args.source_path, args.images, args.depths, args.eval, args.train_test_exp, args.use_masks, args.gs_init_opt, args.pts_per_triangles, args.use_high_res)
         else:
             assert False, "Could not recognize scene type!"
 

@@ -1,0 +1,19 @@
+my_double_compress_bear,toy,True,False,18
+my_double_compress_bear_1,toy,True,False,18
+my_double_compress_bear_2,toy,True,True,12
+my_double_compress_rope,white rope,True,True,9
+my_double_lift_bear,toy,True,True,12
+my_double_lift_cloth,blue cloth,False,True,9
+my_double_lift_cloth_1,blue cloth,False,True,9
+my_double_lift_cloth_2,blue cloth,False,True,9
+my_double_lift_rabbit,toy,True,True,12
+my_double_lift_rabbit_2,toy,True,True,12
+my_double_lift_rope,white rope,True,True,9
+my_single_lift_bear,toy,True,True,12
+my_single_lift_cloth,blue cloth,False,True,9
+my_single_lift_rabbit,toy,True,True,12
+my_single_lift_rabbit_1,toy,True,True,12
+my_single_lift_rope,white rope,True,True,9
+my_single_lift_rope_1,white rope,True,True,9
+my_single_lift_rope_2,white rope,True,True,9
+my_single_lift_teddy,toy,True,True,12

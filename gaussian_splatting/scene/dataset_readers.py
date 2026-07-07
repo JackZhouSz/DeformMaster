@@ -455,7 +455,7 @@ def readNerfSyntheticInfo(path, white_background, depths, eval, extension=".png"
     return scene_info
 
 
-# def readQQTTSceneInfo(path, images, depths, eval, train_test_exp, use_masks=False, mesh_path=None):
+# def readDeformMasterSceneInfo(path, images, depths, eval, train_test_exp, use_masks=False, mesh_path=None):
 #     # currently ignore parameter such as: images, depths, eval, train_test_exp
 
 #     # read metadata
@@ -583,7 +583,7 @@ def readNerfSyntheticInfo(path, white_background, depths, eval, extension=".png"
 #     return scene_info
 
 
-def readQQTTSceneInfo(
+def readDeformMasterSceneInfo(
     path,
     images,
     depths,
@@ -913,5 +913,5 @@ def sample_pcd_from_mesh(mesh_path, POINT_PER_TRIANGLE=5):
 sceneLoadTypeCallbacks = {
     "Colmap": readColmapSceneInfo,
     "Blender": readNerfSyntheticInfo,
-    "QQTT": readQQTTSceneInfo,
+    "DeformMaster": readDeformMasterSceneInfo,
 }
