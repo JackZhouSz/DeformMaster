@@ -4,7 +4,7 @@
 [![arXiv](https://img.shields.io/badge/arXiv-2605.09586-b31b1b?logo=arxiv)](https://arxiv.org/abs/2605.09586)
 [![Demo ckpt & data](https://img.shields.io/badge/Demo_ckpt_%26_data-Hugging_Face-ffcc4d?logo=huggingface)](https://huggingface.co/datasets/Canlee/DeformMaster-Assets)
 
-![DeformMaster teaser](assets/teaser.png)
+![DeformMaster teaser](assets/teaser.jpg)
 
 ## Release Status
 
@@ -48,7 +48,7 @@ without `SKIP_OPT=1`.
 
 The current interactive demo is `interactive_playground_online.py`.
 
-![Interactive playground](assets/playground.png)
+![Interactive playground](assets/playground.jpg)
 
 Download `playground_assets.zip` (ckpt and data) from the [playground assets](https://huggingface.co/datasets/Canlee/DeformMaster-Assets) page into the repository root and unzip it:
 
